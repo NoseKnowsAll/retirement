@@ -5,5 +5,4 @@ Simply modify the personal information in `personal_info.jl` to reflect your per
 
 ```
 include("retirement.jl")
-model_retirement()
 ```

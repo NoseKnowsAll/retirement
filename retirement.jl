@@ -136,3 +136,10 @@ function model_retirement()
         @printf(".\n")
     end
 end
+
+# Run script itself
+model_retirement()
+
+# TODO: Input retirement income you wish to get, output yearly contribution needed
+# TODO: Make todays_dollars accessible to user
+# TODO: Allow for user inputs instead of editing private_info
