@@ -43,7 +43,13 @@ end
 # Helper function to convert a certain amount of money in the future
 # to how much that money would be worth today
 function convert_to_todays_dollars(future_value, years_from_today)
-    present_value = future_value / (1-inflation_rate)^years_from_today
+    present_value = future_value * (1-inflation_rate)^years_from_today
+end
+
+# Helper function to convert a certain amount of money today
+# to how much that money would be worth in the future
+function convert_to_future_dollars(present_value, years_from_today)
+    future_value = present_value / (1-inflation_rate)^years_from_today
 end
 
 # Computes two incomes based on your savings at retirement:
@@ -116,7 +122,17 @@ function model_retirement()
         @printf(".\n\n")
     end
     
-    income1, income2 = yearly_retirement_income(savings, todays_dollars)
-    @printf("At an average rate of %.1f%% growth, your yearly income from savings during retirement will be \$%.2f if you plan to fully spend down your money.\n", long_term_retirement_account_rate*100, income1);
-    @printf("If you were to follow the %.1f%% rule of thumb, your yearly income from savings during retirement will be \$%.2f.\n", retirement_withdrawal_rate*100, income2);
+    income1, income2 = yearly_retirement_income(savings, false)
+    @printf("At an average rate of %.1f%% growth, your yearly income from savings during retirement will be \$%.2f if you plan to fully spend down your money", long_term_retirement_account_rate*100, income1)
+    if (todays_dollars)
+        @printf(" in todays dollars (accounting for inflation).\n")
+    else
+        @printf(".\n")
+    end
+    @printf("If you were to follow the %.1f%% rule of thumb, your yearly income from savings during retirement will be \$%.2f", retirement_withdrawal_rate*100, income2)
+    if (todays_dollars)
+        @printf(" in todays dollars (accounting for inflation).\n")
+    else
+        @printf(".\n")
+    end
 end
